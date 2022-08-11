@@ -9,11 +9,12 @@ from basicsr.utils import imwrite
 
 from gfpgan import GFPGANer
 
+
 # Functions to find and load images
 def find_image_files(path: str):
     """Find all images in the given directory and its subdirectories."""
     frames = Path(path)
-    return (
+    images = (
         list(frames.rglob("*.png"))
         + list(frames.rglob("*.jpg"))
         + list(frames.rglob("*.jpeg"))
@@ -22,6 +23,7 @@ def find_image_files(path: str):
         + list(frames.rglob("*.tiff"))
         + list(frames.rglob("*.gif"))
     )
+    return [str(x) for x in images]
 
 
 def main():
@@ -123,7 +125,7 @@ def main():
         bg_upsampler=bg_upsampler)
 
     # ------------------------ restore ------------------------
-    for i,img_path in enumerate(img_list):
+    for i, img_path in enumerate(img_list):
         # read image
         img_name = os.path.basename(img_path)
         print(f'Processing {img_name} ...')

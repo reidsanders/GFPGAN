@@ -51,7 +51,7 @@ def main():
     if os.path.isfile(args.input):
         img_list = [args.input]
     else:
-        img_list = sorted(glob.glob(os.path.join(args.input, '*')))
+        img_list = sorted(glob.glob(os.path.join(args.input, '**')))
 
     os.makedirs(args.output, exist_ok=True)
 

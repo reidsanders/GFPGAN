@@ -3,10 +3,25 @@ import cv2
 import glob
 import numpy as np
 import os
+from pathlib import Path
 import torch
 from basicsr.utils import imwrite
 
 from gfpgan import GFPGANer
+
+# Functions to find and load images
+def find_image_files(path: str):
+    """Find all images in the given directory and its subdirectories."""
+    frames = Path(path)
+    return (
+        list(frames.rglob("*.png"))
+        + list(frames.rglob("*.jpg"))
+        + list(frames.rglob("*.jpeg"))
+        + list(frames.rglob("*.bmp"))
+        + list(frames.rglob("*.tif"))
+        + list(frames.rglob("*.tiff"))
+        + list(frames.rglob("*.gif"))
+    )
 
 
 def main():
@@ -51,7 +66,7 @@ def main():
     if os.path.isfile(args.input):
         img_list = [args.input]
     else:
-        img_list = sorted(glob.glob(os.path.join(args.input, '**')))
+        img_list = sorted(find_image_files(args.input))
 
     os.makedirs(args.output, exist_ok=True)
 
